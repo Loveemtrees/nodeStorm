@@ -21,5 +21,14 @@
     </script>
     <div id="date"></div>
     <textarea id="text"></textarea>
+
+    <!--PRINT HOST MESSAGES------------------------------------>
+    <ul id="messages"></ul>
+    <script>
+        var socket = io();
+        socket.on("host_message", function(msg){
+            $("#messages").append($("<li>").text(msg));
+        });
+    </script>
   </body>
 </html>

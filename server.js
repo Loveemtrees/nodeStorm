@@ -61,4 +61,9 @@ io.sockets.on('connection', function(socket){
     socket.on('client_data', function(data){
         process.stdout.write(data.letter);
     });
+
+    //recieve client data
+    socket.on('host_message', function(msg){
+        io.emit("host_message", msg);
+    });
 });
