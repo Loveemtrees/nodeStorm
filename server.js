@@ -5,15 +5,17 @@ var server;
 
 server = http.createServer(function(req, res){
     // your normal server code
+
+    //MAPPING
     var path = url.parse(req.url).pathname;
     switch (path){
         case '/':
             res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write('<h1>Hello! Try the <a href="/student.html">Student page</a></h1><br>' +
-                      '<h1>OR Try the <a href="/host.html">Host page</a></h1> ');
+            res.write('<h1>Hello! Try the <a href="/public/student.html">Student page</a></h1><br>' +
+                      '<h1>OR Try the <a href="/public/host.html">Host page</a></h1> ');
             res.end();
             break;
-        case '/student.html':
+        case '/public/student.html':
             fs.readFile(__dirname + path, function(err, data){
                 if (err){ 
                     return send404(res);
@@ -22,7 +24,7 @@ server = http.createServer(function(req, res){
                 res.write(data, 'utf8');
                 res.end();
             });
-        case '/host.html':
+        case '/public/host.html':
             fs.readFile(__dirname + path, function(err, data){
                 if (err){
                     return send404(res);
@@ -31,10 +33,17 @@ server = http.createServer(function(req, res){
                 res.write(data, 'utf8');
                 res.end();
             });
+        case '/public/style.css':
+            fs.readFile(__dirname + path, function(err, data){
+                if (err) return send404(res);
+                res.writeHead(200, { 'Content-Type': 'text/css' });
+                res.end(data, 'utf-8');
+                res.end();
+            });
         break;
         default: send404(res);
     }
-}),
+});
 
 send404 = function(res){
     res.writeHead(404);

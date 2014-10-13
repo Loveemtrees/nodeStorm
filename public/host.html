@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.io Test - HOST</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <!--TEXT_BOX------------------------------------>
+    <script>    
+      var socket = io.connect();
+
+      socket.on('date', function(data){
+        $('#date').text(data.date);
+      });
+
+      $(document).ready(function(){
+        $('#text').keypress(function(e){
+          socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
+        });
+      });
+    </script>
+    <!--<textarea id="text"></textarea>-->
+
+    <!--MESSAGE TO CLIENTS------------------------------------>
+    <script>
+        var socket = io();
+        $(document).ready(function() {
+            $("form").submit(function () {
+                socket.emit("host_message", $("#m").val());
+                $("#m").val("");
+                return false;
+            });
+            socket.on("host_message", function (msg) {
+                $("#messages").prepend($("<li>").addClass("list-group-item").text(msg));
+            });
+        });
+    </script>
+    <div class="container">
+        <div class="header">
+            <!--<ul class="nav nav-pills pull-right">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul> -->
+            <h3 class="text-muted">Audience Response Brainstorming</h3>
+        </div>
+        <div id="date"></div>
+        <div class="jumbotron">
+            <!--<h1>Jumbotron heading</h1>-->
+            <p class="lead">Stellen Sie eine Frage an die Studenten!</p>
+            <form class="form-inline" role="form" action="">
+                <input id="m" type="text" class="form-control" placeholder="Was faellt Ihnen ein zu ...">
+                <button class="btn btn-success">Send</button>
+            </form>
+        </div>
+
+        <div class="row marketing">
+            <div class="col-lg-6">
+                <span class="list-head">Gestellte Fragen</span>
+                <!-- Liste der vergangenen Fragen -->
+                <ul id="messages" class="list-group"></ul>
+            </div>
+
+            <div class="col-lg-6">
+                <span class="list-head">Erhaltene Antworten</span>
+                <!-- Liste der Antworten -->
+                <ul id="messages" class="list-group"></ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; Sebastian Baumgarten 2014</p>
+        </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>

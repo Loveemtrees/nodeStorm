@@ -1,12 +1,13 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.io Test - HOST</title>
+    <title>Socket.io Test - STUDENT</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css"/>
   </head>
   <body>
-    <!--TEXT_BOX------------------------------------>
     <script>    
       var socket = io.connect();
       
@@ -23,18 +24,10 @@
     <div id="date"></div>
     <textarea id="text"></textarea>
 
-    <!--MESSAGE TO CLIENTS------------------------------------>
+    <!--PRINT HOST MESSAGES------------------------------------>
     <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
     <script>
         var socket = io();
-        $("form").submit(function(){
-            socket.emit("host_message", $("#m").val());
-            $("#m").val("");
-            return false;
-        });
         socket.on("host_message", function(msg){
             $("#messages").append($("<li>").text(msg));
         });
