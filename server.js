@@ -66,13 +66,18 @@ io.sockets.on('connection', function(socket){
         socket.emit('date', {'date': new Date()});
     }, 1000);
 
-    //recieve client data
+    //receive client data - NOT USED
     socket.on('client_data', function(data){
         process.stdout.write(data.letter);
     });
 
-    //recieve client data
+    //receive host data
     socket.on('host_message', function(msg){
         io.emit("host_message", msg);
+    });
+
+    //receive client data
+    socket.on('client_message', function(msg){
+        io.emit("client_message", msg);
     });
 });

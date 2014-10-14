@@ -35,17 +35,19 @@
                 return false;
             });
             socket.on("host_message", function (msg) {
+                $("#replies > li").remove();
                 $("#messages").prepend($("<li>").addClass("list-group-item").text(msg));
+            });
+            socket.on("client_message", function (msg) {
+                $("#replies").prepend($("<li>").addClass("list-group-item").text(msg));
             });
         });
     </script>
     <div class="container">
         <div class="header">
-            <!--<ul class="nav nav-pills pull-right">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul> -->
+            <ul class="nav nav-pills pull-right">
+                <li class="text-muted"><h3>HOST</h3></li>
+            </ul>
             <h3 class="text-muted">Audience Response Brainstorming</h3>
         </div>
         <div id="date"></div>
@@ -68,7 +70,7 @@
             <div class="col-lg-6">
                 <span class="list-head">Erhaltene Antworten</span>
                 <!-- Liste der Antworten -->
-                <ul id="messages" class="list-group"></ul>
+                <ul id="replies" class="list-group"></ul>
             </div>
         </div>
 
