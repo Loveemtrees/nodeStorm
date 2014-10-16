@@ -1,4 +1,4 @@
-node-and-socket-example
+Building a brainstorm by audience response application 
 =======================
 
-A quick example of using node.js with socket.io
+Built with node.js and socket.io. Also used Bootstrap and jQuery.
