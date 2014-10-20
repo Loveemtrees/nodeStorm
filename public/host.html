@@ -11,16 +11,13 @@
   <body>
     <!--TEXT_BOX------------------------------------>
     <script>    
-      var socket = io.connect();
+      var socket = io();
 
       socket.on('date', function(data){
         $('#date').text(data.date);
       });
 
       $(document).ready(function(){
-        $('#text').keypress(function(e){
-          socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
-        });
 
         // MESSAGE TO CLIENTS------------------------------------>
         $("form").submit(function () {
@@ -35,6 +32,9 @@
         socket.on("client_message", function (msg) {
             $("#replies").prepend($("<li>").addClass("list-group-item").text(msg));
         });
+        socket.on("counter_update", function (msg) {
+            $("#connected_count").text(msg);
+        });
     });
     </script>
 
@@ -43,9 +43,9 @@
             <ul class="nav nav-pills pull-right">
                 <li class="text-muted"><h3>HOST</h3></li>
             </ul>
-            <h3 class="text-muted">Audience Response Brainstorming v0.1</h3>
+            <h3 class="text-muted">Audience Response Brainstorming <span class="version">v0.1.1</span></h3>
         </div>
-        <div id="date"></div>
+        <div class="meta"><span id="date"></span><span id="connected"><span class="badge" id="connected_count">0</span> connected</span></div>
         <div class="jumbotron">
             <!--<h1>Jumbotron heading</h1>-->
             <p class="lead">Stellen Sie eine Frage an die Studenten!</p>
@@ -59,13 +59,13 @@
             <div class="col-lg-6">
                 <span class="list-head">Gestellte Fragen</span>
                 <!-- Liste der vergangenen Fragen -->
-                <ul id="messages" class="list-group"></ul>
+                <ul id="messages" class="list-group no-scroll-limit"></ul>
             </div>
 
             <div class="col-lg-6">
                 <span class="list-head">Erhaltene Antworten</span>
                 <!-- Liste der Antworten -->
-                <ul id="replies" class="list-group"></ul>
+                <ul id="replies" class="list-group no-scroll-limit"></ul>
             </div>
         </div>
 
