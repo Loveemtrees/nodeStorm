@@ -101,3 +101,14 @@ body {
         border-bottom: 0;
     }
 }
+.meta { min-height: 25px; }
+
+#connected {
+    font-size: 1.5rem;
+    float: right;
+}
+
+.no-scroll-limit {
+    max-height: 400px;
+    overflow: auto;
+}
