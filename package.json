@@ -4,6 +4,7 @@
   "description": "a brainstorm by audience response application",
   "dependencies": {
     "express": "^4.9.7",
+    "hashmap": "^1.1.0",
     "socket.io": "^1.1.0"
   }
 }

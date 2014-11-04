@@ -24,9 +24,6 @@ body {
     margin-bottom: 0;
     line-height: 40px;
 }
-.header .version {
-    font-size: 1.6rem;
-}
 
 /* Custom page footer */
 .footer {

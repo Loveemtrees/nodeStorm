@@ -1,8 +1,13 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var HashMap = require('hashmap').HashMap;
 
 var connectCounter = -1;
+
+var lastQuestion = "";
+var map = new HashMap();
+var replies = [];
 
 // Mapping (Route Handlers)
 app.get('/', function(req, res){
@@ -43,11 +48,23 @@ io.on('connection', function(socket) {
     //receive and emit host data
     socket.on('host_message', function (msg) {
         io.emit("host_message", msg);
+        // save question and replies in hashmap
+        if (lastQuestion != "") {
+            map.set(lastQuestion, replies);
+            lastQuestion = msg;
+            map.forEach(function (value, key) {
+                console.log(key + " : " + value);
+            });
+            replies = [];
+        } else {
+            lastQuestion = msg;
+        }
     });
 
     //receive and emit client data
     socket.on('client_message', function (msg) {
         io.emit("client_message", msg);
+        replies.push(msg);
     });
 
     socket.on('disconnect', function(){
@@ -56,6 +73,11 @@ io.on('connection', function(socket) {
         connectCounter--;
         console.log(connectCounter);
         io.emit("counter_update", connectCounter);
+    });
+
+    socket.on('get_replies', function(msg){
+        console.log(msg);
+        // antworten zur msg aus map suchen und zurück schicken!
     });
 });
 

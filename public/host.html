@@ -27,7 +27,8 @@
         });
         socket.on("host_message", function (msg) {
             $("#replies > li").remove();
-            $("#messages").prepend($("<li>").addClass("list-group-item").text(msg));
+            $("#messages").prepend($("<li>").addClass("list-group-item").attr("id", function( index ) {
+                return "item-" + index;}).text(msg));
         });
         socket.on("client_message", function (msg) {
             $("#replies").prepend($("<li>").addClass("list-group-item").text(msg));
@@ -35,6 +36,15 @@
         socket.on("counter_update", function (msg) {
             $("#connected_count").text(msg);
         });
+
+        // --------------------------------------------------------
+
+        $("#messages").on("click", "#item-0", function(event){
+            console.log($(this).text());
+            socket.emit("get_replies", $(this).text());
+        });
+
+
     });
     </script>
 
@@ -43,7 +53,7 @@
             <ul class="nav nav-pills pull-right">
                 <li class="text-muted"><h3>HOST</h3></li>
             </ul>
-            <h3 class="text-muted">Audience Response Brainstorming <span class="version">v0.1.1</span></h3>
+            <h3 class="text-muted">Audience Response Brainstorming <small>v0.1.1</small></h3>
         </div>
         <div class="meta"><span id="date"></span><span id="connected"><span class="badge" id="connected_count">0</span> connected</span></div>
         <div class="jumbotron">
