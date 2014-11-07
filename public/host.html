@@ -27,8 +27,8 @@
         });
         socket.on("host_message", function (msg) {
             $("#replies > li").remove();
-            $("#messages").prepend($("<li>").addClass("list-group-item").attr("id", function( index ) {
-                return "item-" + index;}).text(msg));
+            $("#messages > .list-group-item").removeClass("active");
+            $("#messages").prepend($("<li>").addClass("list-group-item active").text(msg));
         });
         socket.on("client_message", function (msg) {
             $("#replies").prepend($("<li>").addClass("list-group-item").text(msg));
@@ -36,11 +36,23 @@
         socket.on("counter_update", function (msg) {
             $("#connected_count").text(msg);
         });
+        // receive the requested replies and implement into DOM-tree
+        socket.on("requested_replies", function (msg) {
+            console.log(msg);
+            $("#replies li").remove();
+            for (var i = 0; i < msg.length; i++){
+                var reply = msg[i];
+                $("#replies").prepend($("<li>").fadeIn("slow").addClass("list-group-item").text(reply));
+            }
+        });
 
         // --------------------------------------------------------
 
-        $("#messages").on("click", "#item-0", function(event){
+        // click on a message list element will send a request for related replies to server
+        $("#messages").on("click", ".list-group-item", function(){
             console.log($(this).text());
+            $("#messages > .list-group-item").removeClass("active");
+            $(this).addClass("active");
             socket.emit("get_replies", $(this).text());
         });
 

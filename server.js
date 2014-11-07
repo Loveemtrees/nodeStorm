@@ -75,9 +75,10 @@ io.on('connection', function(socket) {
         io.emit("counter_update", connectCounter);
     });
 
+    // after request with question as string, check hashMap and send corresponding replies
     socket.on('get_replies', function(msg){
-        console.log(msg);
-        // antworten zur msg aus map suchen und zurück schicken!
+        console.log(map.get(msg));
+        io.emit('requested_replies', map.get(msg));
     });
 });
 
