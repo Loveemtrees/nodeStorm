@@ -4,34 +4,46 @@ var io = require('socket.io')(http);
 var HashMap = require('hashmap').HashMap;
 
 var connectCounter = -1;
-
 var lastQuestion = "";
 var currentQuestion = "";
 var map = new HashMap();
 var replies = [];
 var replyCounter = 0;
 
-// Mapping (Route Handlers)
+// Mapping (Route Handlers) ----------------------------------------------------------
 app.get('/', function(req, res){
     res.send("<h1>Hello! Try the <a href='/student'>Student page</a></h1><br>" +
     "<h1>OR Try the <a href='/host'>Host page</a></h1>");
 });
 app.get('/student', function(req, res){
-    res.sendFile(__dirname + '/public/student.html');
+    res.sendFile(__dirname + '/views/student.html');
 });
 app.get('/host', function(req, res){
-    res.sendFile(__dirname + '/public/host.html');
+    res.sendFile(__dirname + '/views/host.html');
 });
 app.get('/style.css', function(req, res){
-    res.sendFile(__dirname + '/public/style.css');
+    res.sendFile(__dirname + '/public/stylesheets/style.css');
 });
+app.get('/host.js', function(req, res){
+    res.sendFile(__dirname + '/public/javascripts/host.js');
+});
+app.get('/student.js', function(req, res){
+    res.sendFile(__dirname + '/public/javascripts/student.js');
+});
+app.get('/jquery.js', function(req, res){
+    res.sendFile(__dirname + '/public/javascripts/jquery-2.1.1.min.js');
+});
+app.get('/bootstrap.css', function(req, res){
+    res.sendFile(__dirname + '/public/stylesheets/bootstrap.min.css');
+});
+// mapping end ------------------------------------------------------------------------
 
 // define port
 http.listen(8001, function(){
     console.log('listening on Port :8001');
 });
 
-// define interactions with client
+// define interactions with client ---------------------------------
 io.on('connection', function(socket) {
     //send data to client
 
