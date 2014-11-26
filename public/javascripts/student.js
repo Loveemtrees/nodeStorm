@@ -16,7 +16,16 @@ $(document).ready(function(){
             $("#ready_button").removeAttr("disabled");
             $("#questions_active > p").remove();
             $("#questions_active").prepend($("<p>").addClass("lead").text(msg));
+            $("#questions").prepend($("<li>").addClass("list-group-item").text(msg));
         }
+    });
+    // Users replied to current question
+    socket.on("replyCounter", function (msg) {
+        $("#reply_count").text(msg);
+    });
+    // Users connected
+    socket.on("counter_update", function (msg) {
+        $("#connected_count").text(msg);
     });
 
     // send reply
@@ -39,6 +48,7 @@ $(document).ready(function(){
         $("#replies > li").remove();
         $("#questions").prepend($("<li>").addClass("list-group-item").text(msg));
         $("#ready_button").removeAttr("disabled");
+        $("#reply_count").text("0");
     });
 
 });

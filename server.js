@@ -1,6 +1,8 @@
 var app = require('express')();
+var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var fs = require('fs');
 var HashMap = require('hashmap').HashMap;
 
 var connectCounter = -1;
@@ -13,7 +15,7 @@ var replyCounter = 0;
 // Mapping (Route Handlers) ----------------------------------------------------------
 app.get('/', function(req, res){
     res.send("<h1>Hello! Try the <a href='/student'>Student page</a></h1><br>" +
-    "<h1>OR Try the <a href='/host'>Host page</a></h1>");
+    "<h1>OR Try the <a href='/host'>Host page</a><a href='/download'>Download</a></h1>");
 });
 app.get('/student', function(req, res){
     res.sendFile(__dirname + '/views/student.html');
@@ -21,20 +23,15 @@ app.get('/student', function(req, res){
 app.get('/host', function(req, res){
     res.sendFile(__dirname + '/views/host.html');
 });
-app.get('/style.css', function(req, res){
-    res.sendFile(__dirname + '/public/stylesheets/style.css');
+app.get('/download', function(req, res){
+    var file = __dirname + '/repliesOfSession.txt';
+    res.download(file); // Set disposition and send it.
 });
-app.get('/host.js', function(req, res){
-    res.sendFile(__dirname + '/public/javascripts/host.js');
-});
-app.get('/student.js', function(req, res){
-    res.sendFile(__dirname + '/public/javascripts/student.js');
-});
-app.get('/jquery.js', function(req, res){
-    res.sendFile(__dirname + '/public/javascripts/jquery-2.1.1.min.js');
-});
-app.get('/bootstrap.css', function(req, res){
-    res.sendFile(__dirname + '/public/stylesheets/bootstrap.min.css');
+// serve static files
+app.use(express.static('public'));
+// 404
+app.use(function(req, res, next){
+    res.send(404, '<h1>404 - Sorry cannot find that!</h1>');
 });
 // mapping end ------------------------------------------------------------------------
 
@@ -114,5 +111,22 @@ io.on('connection', function(socket) {
     socket.on('check_for_questions', function(){
         io.emit('current_question', currentQuestion);
     });
+
+    // save reply-matrix to file
+    socket.on('save', function(){
+        var data = [];
+        data.push("AUDIENCE RESPONSE SESSION of " + new Date() +"\n\n\n");
+        map.forEach(function(value, key) {
+            data.push(key + " : " + value + "\n");
+        });
+        data.push(currentQuestion + " : " + replies + "\n\n");
+        data.push("---------- END ---------- ");
+
+        fs.writeFile('repliesOfSession.txt', data, function (err) {
+            if (err) return console.log(err);
+            else { io.emit('save_ok', true); }
+        });
+    });
+
 });
 

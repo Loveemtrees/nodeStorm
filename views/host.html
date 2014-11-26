@@ -3,10 +3,10 @@
   <head>
     <title>Socket.io Test - HOST</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/jquery.js"></script>
-    <script src="/host.js"></script>
-    <link rel="stylesheet" href="/bootstrap.css">
-    <link rel="stylesheet" href="/style.css">
+    <script src="/javascripts/jquery-2.1.1.min.js"></script>
+    <script src="/javascripts/host.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -17,15 +17,16 @@
             </ul>
             <h3 class="text-muted">Audience Response Brainstorming <small>v0.1.1</small></h3>
         </div>
-        <div class="meta"><span id="date"></span><span id="connected"><span class="badge" id="connected_count">0</span> connected</span></div>
+        <div class="meta"><span id="date"></span><span id="connected"><span class="badge" id="reply_count">0</span> of <span class="badge" id="connected_count">0</span> users replied </span></div>
 
         <div class="jumbotron">
             <p class="lead">Stellen Sie eine Frage an die Studenten!</p>
             <form class="form-inline" role="form" action="">
-                <input id="m" type="text" class="form-control" placeholder="Was faellt Ihnen ein zu ...">
+                <input id="m" type="text" class="form-control" required="required" placeholder="Was faellt Ihnen ein zu ...">
                 <button class="btn btn-success">Send</button>
             </form>
-            <p id="replyCounter"></p>
+            <button id="save" class="btn btn-default">Save All</button><br>
+            <a id='download' target="_blank" style='display:none;' href='/download'>Download</a>
         </div>
 
         <div class="row marketing">

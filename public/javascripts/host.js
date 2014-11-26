@@ -13,7 +13,7 @@ $(document).ready(function(){
         $("#replies > li").remove();
         $("#messages > .list-group-item").removeClass("active");
         $("#messages").prepend($("<li>").addClass("list-group-item active").text($("#m").val()));
-        $("#replyCounter").text("Noch niemand hat geantwortet");
+        $("#reply_count").text("0");
         replies = [];
         $("#m").val("");
         return false;
@@ -26,9 +26,6 @@ $(document).ready(function(){
         $("#messages .list-group-item:first-of-type span").remove();
         $("#messages .list-group-item:first-of-type").append($("<span>").addClass("badge").text(replies));
     });
-    socket.on("counter_update", function (msg) {
-        $("#connected_count").text(msg);
-    });
     // receive the requested replies and implement into DOM-tree
     socket.on("requested_replies", function (msg) {
         console.log(msg);
@@ -38,8 +35,16 @@ $(document).ready(function(){
             $("#replies").prepend($("<li>").fadeIn("slow").addClass("list-group-item").text(reply));
         }
     });
+    // Users replied to current question
     socket.on("replyCounter", function (msg) {
-        $("#replyCounter").text(msg+ " Personen haben geantwortet");
+        $("#reply_count").text(msg);
+    });
+    // Users connected
+    socket.on("counter_update", function (msg) {
+        $("#connected_count").text(msg);
+    });
+    socket.on("save_ok", function (msg) {
+        $('#download').show();
     });
     // --------------------------------------------------------
 
@@ -48,7 +53,8 @@ $(document).ready(function(){
         if( !$(this).is(":first-of-type") ){
             $("#messages > .list-group-item").removeClass("active");
             $(this).addClass("active");
-            var textWithoutNumber = $(this).text().replace(/[0-9]/g, '');
+            // Clean text from number of badge
+            var textWithoutNumber = $(this).text().replace(/\d+$/, '');
             socket.emit("get_replies", textWithoutNumber);
         }
     });
@@ -56,9 +62,17 @@ $(document).ready(function(){
         $("#messages > .list-group-item").removeClass("active");
         $(this).addClass("active");
         // Clean text from number of badge
-        var textWithoutNumber = $(this).text().replace(/[0-9]/g, '');
+        var textWithoutNumber = $(this).text().replace(/\d+$/, '');
         socket.emit("get_replies_for_actual", textWithoutNumber );
     });
+    $("#save").on("click",  function(){
+        socket.emit("save", true);
+    });
+    $("#download").on("click",  function(){
+        $('#download').hide();
+    });
+
+
 
 
 });

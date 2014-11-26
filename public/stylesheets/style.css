@@ -113,3 +113,7 @@ body {
 #replyCounter {
     font-size: 1.5rem;
 }
+
+#save {
+    margin: 10px 10px 0;
+}
