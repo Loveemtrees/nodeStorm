@@ -1,11 +1,17 @@
 var socket = io();
 var replies = [];
 
-socket.on('date', function(data){
-    $('#date').text(data.date);
-});
-
 $(document).ready(function(){
+
+    // STATUS ---------------------------------------------
+    socket.io.on('connect_error', function(err) {
+        $("#connection").removeClass("connection-ok");
+        $("#connection").addClass("connection-broken");
+    });
+    socket.on('connect', function() {
+        $("#connection").removeClass("connection-broken");
+        $("#connection").addClass("connection-ok");
+    });
 
     // MESSAGE TO CLIENTS------------------------------------>
     $("form").submit(function () {
@@ -65,14 +71,13 @@ $(document).ready(function(){
         var textWithoutNumber = $(this).text().replace(/\d+$/, '');
         socket.emit("get_replies_for_actual", textWithoutNumber );
     });
+    // Save button - tell node server
     $("#save").on("click",  function(){
         socket.emit("save", true);
     });
+    // Download button - hide on click
     $("#download").on("click",  function(){
         $('#download').hide();
     });
-
-
-
 
 });

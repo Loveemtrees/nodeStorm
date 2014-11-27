@@ -15,7 +15,7 @@ var replyCounter = 0;
 // Mapping (Route Handlers) ----------------------------------------------------------
 app.get('/', function(req, res){
     res.send("<h1>Hello! Try the <a href='/student'>Student page</a></h1><br>" +
-    "<h1>OR Try the <a href='/host'>Host page</a><a href='/download'>Download</a></h1>");
+    "<h1>OR Try the <a href='/host'>Host page</a>");
 });
 app.get('/student', function(req, res){
     res.sendFile(__dirname + '/views/student.html');
@@ -25,7 +25,7 @@ app.get('/host', function(req, res){
 });
 app.get('/download', function(req, res){
     var file = __dirname + '/repliesOfSession.txt';
-    res.download(file); // Set disposition and send it.
+    res.download(file);
 });
 // serve static files
 app.use(express.static('public'));
@@ -51,10 +51,8 @@ io.on('connection', function(socket) {
     io.emit("counter_update", connectCounter);
 
     // messages
-    // date
-    setInterval(function () {
-        socket.emit('date', {'date': new Date()});
-    }, 1000);
+    // ping
+    setInterval( function(){ socket.emit("ping", true); }, 3000);
 
     //receive and emit host data
     socket.on('host_message', function (msg) {
@@ -115,6 +113,7 @@ io.on('connection', function(socket) {
     // save reply-matrix to file
     socket.on('save', function(){
         var data = [];
+
         data.push("AUDIENCE RESPONSE SESSION of " + new Date() +"\n\n\n");
         map.forEach(function(value, key) {
             data.push(key + " : " + value + "\n");

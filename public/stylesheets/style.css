@@ -96,9 +96,18 @@ body {
     /* Remove the bottom border on the jumbotron for visual effect */
     .jumbotron {
         border-bottom: 0;
+        max-height: 220px;
     }
 }
 .meta { min-height: 25px; }
+
+.connection-ok {
+    color: #00cc00;
+}
+
+.connection-broken {
+    color: #dd0000;
+}
 
 #connected {
     font-size: 1.5rem;
@@ -115,5 +124,5 @@ body {
 }
 
 #save {
-    margin: 10px 10px 0;
+    margin: 10px 10px;
 }

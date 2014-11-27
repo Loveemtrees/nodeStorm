@@ -7,8 +7,17 @@ socket.on('date', function(data){
 
 $(document).ready(function(){
 
-    // MESSAGE TO HOST------------------------------------
+    // STATUS ---------------------------------------------
+    socket.io.on('connect_error', function(err) {
+        $("#connection").removeClass("connection-ok");
+        $("#connection").addClass("connection-broken");
+    });
+    socket.on('connect', function() {
+        $("#connection").removeClass("connection-broken");
+        $("#connection").addClass("connection-ok");
+    });
 
+    // MESSAGE TO HOST------------------------------------
     // check if there's already a question
     socket.emit('check_for_questions', true);
     socket.on('current_question', function (msg){
