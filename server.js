@@ -14,10 +14,6 @@ var replyCounter = 0;
 
 // Mapping (Route Handlers) ----------------------------------------------------------
 app.get('/', function(req, res){
-    res.send("<h1>Hello! Try the <a href='/student'>Student page</a></h1><br>" +
-    "<h1>OR Try the <a href='/host'>Host page</a>");
-});
-app.get('/student', function(req, res){
     res.sendFile(__dirname + '/views/student.html');
 });
 app.get('/host', function(req, res){

@@ -5,7 +5,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/jquery-2.1.1.min.js"></script>
     <script src="/javascripts/student.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/font-awesome-4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,11 @@
             </ul>
             <h3 class="text-muted">Audience Response Brainstorming <small>v0.2</small></h3>
         </div>
-        <div class="meta"><i id="connection" class="fa fa-circle"></i> node Server<span id="connected"><span class="badge" id="reply_count">0</span> of <span class="badge" id="connected_count">0</span> users replied </span></div>
 
+        <div class="meta"><i id="connection" class="fa fa-circle"></i> node Server
+            <span id="connected"><span class="badge" id="reply_count">0</span> of <span class="badge" id="connected_count">0</span> users replied </span>
+            <span id="disconnected" style="display: none"><i class="fa fa-circle-o-notch fa-spin"></i> trying to reconnect ... </span>
+        </div>
         <div class="jumbotron" id="questions_active">
             <!--<h1>Jumbotron heading</h1>-->
             <p class="lead" id="question_placeholder">Es wurde noch keine Frage gestellt!</p>
@@ -34,7 +37,6 @@
                 <!-- Liste der vergangenen Fragen -->
                 <ul id="questions" class="list-group"></ul>
             </div>
-
             <div class="col-lg-6">
                 <span class="list-head">Meine Antworten</span>
                 <!-- Liste der Antworten -->

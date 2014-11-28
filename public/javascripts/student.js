@@ -9,10 +9,14 @@ $(document).ready(function(){
 
     // STATUS ---------------------------------------------
     socket.io.on('connect_error', function(err) {
+        $("#connected").hide();
+        $("#disconnected").show();
         $("#connection").removeClass("connection-ok");
         $("#connection").addClass("connection-broken");
     });
     socket.on('connect', function() {
+        $("#disconnected").hide();
+        $("#connected").show();
         $("#connection").removeClass("connection-broken");
         $("#connection").addClass("connection-ok");
     });

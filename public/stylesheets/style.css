@@ -19,7 +19,7 @@ body {
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
-    padding-bottom: 19px;
+    padding-bottom: 5px;
     margin-top: 0;
     margin-bottom: 0;
     line-height: 40px;
@@ -109,6 +109,7 @@ body {
     color: #dd0000;
 }
 
+#disconnected,
 #connected {
     font-size: 1.5rem;
     float: right;
