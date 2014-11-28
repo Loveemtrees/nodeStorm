@@ -19,7 +19,7 @@ body {
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
-    padding-bottom: 19px;
+    padding-bottom: 5px;
     margin-top: 0;
     margin-bottom: 0;
     line-height: 40px;
@@ -96,5 +96,34 @@ body {
     /* Remove the bottom border on the jumbotron for visual effect */
     .jumbotron {
         border-bottom: 0;
+        max-height: 220px;
     }
+}
+.meta { min-height: 25px; }
+
+.connection-ok {
+    color: #00cc00;
+}
+
+.connection-broken {
+    color: #dd0000;
+}
+
+#disconnected,
+#connected {
+    font-size: 1.5rem;
+    float: right;
+}
+
+.no-scroll-limit {
+    max-height: 400px;
+    overflow: auto;
+}
+
+#replyCounter {
+    font-size: 1.5rem;
+}
+
+#save {
+    margin: 10px 10px;
 }
