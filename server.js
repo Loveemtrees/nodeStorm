@@ -43,7 +43,6 @@ io.on('connection', function(socket) {
     // log and count
     console.log("a user connected");
     connectCounter++;
-    console.log(connectCounter);
     io.emit("counter_update", connectCounter);
 
     // messages
@@ -60,9 +59,6 @@ io.on('connection', function(socket) {
         if (lastQuestion != "") {
             map.set(lastQuestion, replies);
             lastQuestion = msg;
-            map.forEach(function (value, key) {
-                console.log(key + " : " + value);
-            });
             replies = [];
         } else {
             lastQuestion = msg;
@@ -86,13 +82,11 @@ io.on('connection', function(socket) {
         // log and count
         console.log("a user disconnected");
         connectCounter--;
-        console.log(connectCounter);
         io.emit("counter_update", connectCounter);
     });
 
     // after request with question as string, check hashMap and send corresponding replies
     socket.on('get_replies', function(msg){
-        console.log(map.get(msg));
         socket.emit('requested_replies', map.get(msg));
     });
 
