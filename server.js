@@ -93,17 +93,17 @@ io.on('connection', function(socket) {
     // after request with question as string, check hashMap and send corresponding replies
     socket.on('get_replies', function(msg){
         console.log(map.get(msg));
-        io.emit('requested_replies', map.get(msg));
+        socket.emit('requested_replies', map.get(msg));
     });
 
     // for the active question we reply with the current replies array
     socket.on('get_replies_for_actual', function(){
-        io.emit('requested_replies', replies);
+        socket.emit('requested_replies', replies);
     });
 
     // send current question to client for when he connected after question has been sent
     socket.on('check_for_questions', function(){
-        io.emit('current_question', currentQuestion);
+        socket.emit('current_question', currentQuestion);
     });
 
     // save reply-matrix to file
