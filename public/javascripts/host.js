@@ -68,6 +68,7 @@ $(document).ready(function(){
             socket.emit("get_replies", textWithoutNumber);
         }
     });
+    // make clicked item active and send content to server
     $("#messages").on("click", ".list-group-item:first-child", function(){
         $("#messages > .list-group-item").removeClass("active");
         $(this).addClass("active");

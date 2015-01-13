@@ -1,23 +1,31 @@
 /*Overwrite Bootstrap CSS*/
-/* Space out content a bit */
+
+/************************** GENERAL **************************/
 body {
     padding-top: 20px;
     padding-bottom: 20px;
+    background-color: #e3e3e3;
+    /*  background-image: url("/images/pattern-9uqf.png");
+        background-repeat: repeat; */
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-    padding-right: 15px;
-    padding-left: 15px;
+.row {
+    margin: 0;
 }
 
-/* Custom page header */
-.header {
-    border-bottom: 1px solid #e5e5e5;
+.btn-success {
+    background-color: #cc0044;
+    border-color: #cc0044;
 }
-/* Make the masthead heading the same height as the navigation */
+
+.btn-success:focus,
+.btn-success:active,
+.btn-success:hover {
+    background-color: #ff0055;
+    border-color: #ff0055;
+}
+
+/************************** HEADER ***************************/
 .header h3 {
     padding-bottom: 5px;
     margin-top: 0;
@@ -25,81 +33,16 @@ body {
     line-height: 40px;
 }
 
-/* Custom page footer */
-.footer {
-    padding-top: 19px;
-    color: #777;
-    border-top: 1px solid #e5e5e5;
+.header .text-muted {
+    color: #cc0044;
 }
 
-/* Desktop */
-@media (min-width: 768px) {
-
-    .jumbotron .form-control{
-        width: 60%; margin-right: 5px;
-    }
-}
-/* Mobile */
-@media (max-width: 767px) {
-    /* Adjust Spaces for mobile */
-    .jumbotron .form-control {
-        margin-bottom: 10px;
-    }
-
-     #date {
-        margin: 10px 0 2px 0;
-    }
-}
-
-.container-narrow > hr {
-    margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
+.meta {
+    margin-bottom: 10px;
+    min-height: 20px;
     text-align: center;
-    border-bottom: 1px solid #e5e5e5;
+    width: 100%;
 }
-
-/* Supporting marketing content */
-.marketing {
-    margin: 40px 0;
-}
-.marketing p + h4 {
-    margin-top: 28px;
-}
-
-.list-head {
-    font-size: 12px;
-    font-weight: 700;
-    color: #959595;
-    letter-spacing: 1px;
-}
-
-.list-group {
-    margin-top: 5px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-right: 0;
-        padding-left: 0;
-    }
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 15px;
-    }
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-        max-height: 220px;
-    }
-}
-.meta { min-height: 25px; }
 
 .connection-ok {
     color: #00cc00;
@@ -109,21 +52,160 @@ body {
     color: #dd0000;
 }
 
-#disconnected,
+#disconnected {
+    text-align: center;
+}
+
 #connected {
-    font-size: 1.5rem;
     float: right;
 }
 
-.no-scroll-limit {
-    max-height: 400px;
-    overflow: auto;
+/************************** CONTENT **************************/
+.panel {
+    color: #fff;
+    background-color: #333;
+    padding: 15px;
 }
 
-#replyCounter {
+.panel .btn {
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    height: 41px;
+}
+
+.panel .list-head {
+    color: #fff;
+    width: 100%;
+    padding-left: 5px;
+}
+
+.panel .list-group {
+    width: 100%;
+}
+
+.panel .col-lg-10,
+.panel .col-lg-12,
+.panel .col-lg-2 {
+    padding: 0 5px;
+}
+
+.right {
+    padding-right: 0;
+}
+
+.right .list-head,
+.left .list-head {
+    font-weight: 400;
+    letter-spacing: 1px;
+    float: left;
+}
+
+.right .list-group,
+.left .list-group {
+    margin-top: 5px;
+}
+
+/* LISTS */
+.list-group-item {
+    display: inherit !important;
+    color: #333;
+}
+
+.list-group-item.active:focus,
+.list-group-item.active:hover,
+.list-group-item.active {
+    background-color: #14a5cc;
+    border-color: #14a5cc;
+}
+
+.list-group-item:focus,
+.list-group-item:hover {
+    background-color: #14a5cc;
+    border-color: #14a5cc;
+    color: #fff;
+}
+
+/************************** LEFT *****************************/
+.left .lead {
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.left .form-inline .form-control {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 40px;
+}
+
+.left #save {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.left #download {
+    padding-top: 10px;
+}
+
+@media (min-width: 1200px) {
+    .left #download {
+        padding-left: 8px;
+    }
+}
+
+/************************** RIGHT ****************************/
+/* Mobile */
+@media (max-width: 1199px) {
+    .right {
+        padding: 0;
+    }
+}
+
+.right #replyCounter {
     font-size: 1.5rem;
 }
 
-#save {
-    margin: 10px 10px;
+.right .col-lg-12 {
+    padding: 0;
+}
+
+.right .replies-head {
+    width: 100%;
+    margin-bottom: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.right #questions.list-group,
+.right #replies.list-group {
+    margin-top: 20px;
+    position: relative;
+    top: 20px;
+}
+
+/************************** FOOTER ***************************/
+.footer {
+    padding-top: 19px;
+    color: #777;
+}
+
+/************************** STUDENT **************************/
+
+.student .jumbotron {
+    text-align: center;
+    padding: 15px;
+}
+
+.student .jumbotron p {
+    color: #333;
+    margin-bottom: 0;
+}
+
+.student #questions {
+    margin-bottom: 40px;
+}
+
+.student .right {
+    padding-right: 15px;
+    padding-left: 0;
 }
