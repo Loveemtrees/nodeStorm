@@ -151,6 +151,10 @@ body {
     .left #download {
         padding-left: 8px;
     }
+
+    .student .right {
+        padding-right: 15px;
+    }
 }
 
 /************************** RIGHT ****************************/
@@ -206,6 +210,5 @@ body {
 }
 
 .student .right {
-    padding-right: 15px;
     padding-left: 0;
 }
