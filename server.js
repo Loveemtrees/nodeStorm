@@ -109,15 +109,18 @@ io.on('connection', function(socket) {
     // save reply-matrix to file
     socket.on('save', function(){
         var data = [];
+        var dataString;
 
         data.push("AUDIENCE RESPONSE SESSION of " + new Date() +"\n\n\n");
         map.forEach(function(value, key) {
-            data.push(key + " : " + value + "\n");
+            data.push("*** Frage ***\n" + key + " :\n" + value.join("\n") + "\n\n");
         });
-        data.push(currentQuestion + " : " + replies + "\n\n");
+        data.push("*** Frage ***\n" + currentQuestion + " :\n" + replies.join("\n") + "\n\n");
         data.push("---------- END ---------- ");
 
-        fs.writeFile('repliesOfSession.txt', data, function (err) {
+        dataString = data.join("");
+
+        fs.writeFile('repliesOfSession.txt', dataString, function (err) {
             if (err) return console.log(err);
             else { io.emit('save_ok', true); }
         });
