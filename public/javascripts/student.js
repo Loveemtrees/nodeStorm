@@ -59,7 +59,8 @@ $(document).ready(function(){
         $("#questions_active > p").remove();
         $("#questions_active").prepend($("<p>").addClass("lead").text(msg));
         $("#replies > li").remove();
-        $("#questions").prepend($("<li>").addClass("list-group-item").text(msg));
+        $("#questions > .list-group-item").removeClass("active");
+        $("#questions").prepend($("<li>").addClass("list-group-item active").text(msg));
         $("#ready_button").removeAttr("disabled");
         $("#reply_count").text("0");
     });
