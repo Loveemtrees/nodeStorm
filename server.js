@@ -38,16 +38,12 @@ http.listen(8001, function(){
 
 // define interactions with client ---------------------------------
 io.on('connection', function(socket) {
-    //send data to client
 
     // log and count
     console.log("a user connected");
     connectCounter++;
     io.emit("counter_update", connectCounter);
 
-    // messages
-    // ping
-    setInterval( function(){ socket.emit("ping", true); }, 3000);
 
     //receive and emit host data
     socket.on('host_message', function (msg) {
