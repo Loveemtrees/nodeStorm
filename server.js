@@ -39,46 +39,43 @@ http.listen(8001, function(){
 // define interactions with client ---------------------------------
 io.on('connection', function(socket) {
 
-    // log and count
+    // log, count and emit connects
     console.log("a user connected");
     connectCounter++;
-    io.emit("counter_update", connectCounter);
+    io.emit("counter_update", connectCounter); // send updated connect counter
 
 
     //receive and emit host data
     socket.on('host_message', function (msg) {
-        currentQuestion = msg;
-        io.emit("host_message", msg);
-        // receive replies for new question set to 0
-        replyCounter = 0;
-        // save question and replies in hashmap when new question sent
-        if (lastQuestion != "") {
-            map.set(lastQuestion, replies);
-            lastQuestion = msg;
-            replies = [];
-        } else {
-            lastQuestion = msg;
+        currentQuestion = msg;              // set current question
+        io.emit("host_message", msg);       // send out question
+        replyCounter = 0;                   // reset replyCounter
+        if (lastQuestion != "") {           // if not first ever question
+            map.set(lastQuestion, replies); // save last question and replies in hashmap
+            lastQuestion = msg;             // save question
+            replies = [];                   // empty replies
+        } else {                            // on first question
+            lastQuestion = msg;             // save question
         }
     });
 
     //receive and emit client data
     socket.on('client_message', function (msg) {
-        io.emit("client_message", msg);
-        replies.push(msg);
+        io.emit("client_message", msg); // send out replies
+        replies.push(msg);              // save replies in array
     });
 
     // receive true msg on first reply from client
     socket.on("reply_status", function (msg){
-        msg ? replyCounter++ : "";
-        //map.get(currentQuestion).length;
+        msg ? replyCounter++ : "";  // increment counter if first reply
         io.emit("replyCounter", replyCounter);
     });
 
+    // log, count and emit disconnects
     socket.on('disconnect', function(){
-        // log and count
         console.log("a user disconnected");
         connectCounter--;
-        io.emit("counter_update", connectCounter);
+        io.emit("counter_update", connectCounter); // send updated connect counter
     });
 
     // after request with question as string, check hashMap and send corresponding replies
@@ -101,18 +98,20 @@ io.on('connection', function(socket) {
         var data = [];
         var dataString;
 
-        data.push("AUDIENCE RESPONSE SESSION of " + new Date() +"\n\n\n");
-        map.forEach(function(value, key) {
-            data.push("*** Frage ***\n" + key + " :\n" + value.join("\n") + "\n\n");
+        data.push("AUDIENCE RESPONSE SESSION of " + new Date() + "\n\n\n");                     // heading
+        map.forEach(function (value, key) {                                                     // run through hashmap
+            data.push("*** Frage ***\n" + key + " :\n" + value.join("\n") + "\n\n");           // save each question and replies
         });
-        data.push("*** Frage ***\n" + currentQuestion + " :\n" + replies.join("\n") + "\n\n");
+        data.push("*** Frage ***\n" + currentQuestion + " :\n" + replies.join("\n") + "\n\n"); // save current question and replies
         data.push("---------- END ---------- ");
 
-        dataString = data.join("");
+        dataString = data.join("");                                                            // no commas
 
-        fs.writeFile('repliesOfSession.txt', dataString, function (err) {
-            if (err) return console.log(err);
-            else { io.emit('save_ok', true); }
+        fs.writeFile('repliesOfSession.txt', dataString, function (err) {                      // write result to file
+            if (err) return console.log(err);                                                  // log errors
+            else {
+                io.emit('save_ok', true);
+            }                                                 // send success msg
         });
     });
 
