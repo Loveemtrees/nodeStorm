@@ -44,6 +44,15 @@ body {
     width: 100%;
 }
 
+.host .meta {
+    min-height: 30px;
+}
+
+.meta #ip {
+    color: #777;
+    float: right;
+}
+
 .connection-ok {
     color: #00cc00;
 }

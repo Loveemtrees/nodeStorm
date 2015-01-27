@@ -5,12 +5,15 @@ $(document).ready(function(){
 
     // STATUS ---------------------------------------------
     socket.on('connect_error', function (err) { // disconnect
+        $("#ip").hide();
         $("#connected").hide();
         $("#disconnected").show();
         $("#connection").removeClass("connection-ok");
         $("#connection").addClass("connection-broken");
     });
     socket.on('connect', function () { // connected
+        socket.emit("get_ip", true);
+        $("#ip").show();
         $("#disconnected").hide();
         $("#connected").show();
         $("#connection").removeClass("connection-broken");
@@ -55,9 +58,15 @@ $(document).ready(function(){
     socket.on("counter_update", function (msg) {
         $("#connected_count").text(msg);
     });
+    // Save successful
     socket.on("save_ok", function (msg) {
         $('#download').show();
     });
+    // Receive IP
+    socket.on("server_ip", function (msg) {
+        $("#ip").text('Users can connect via this address: ' + msg);
+    });
+
     // --------------------------------------------------------
 
     // click on a message list element will send a request for related replies to server

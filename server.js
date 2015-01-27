@@ -11,6 +11,9 @@ var currentQuestion = "";
 var map = new HashMap();
 var replies = [];
 var replyCounter = 0;
+var port = 8001;
+var ip = require('ip');
+
 
 // Mapping (Route Handlers) ----------------------------------------------------------
 app.get('/', function(req, res){
@@ -27,13 +30,14 @@ app.get('/download', function(req, res){
 app.use(express.static('public'));
 // 404
 app.use(function(req, res, next){
-    res.send(404, '<h1>404 - Sorry cannot find that!</h1>');
+    res.status(404).send('<h1>404 - Sorry cannot find that!</h1>');
 });
 // mapping end ------------------------------------------------------------------------
 
 // define port
-http.listen(8001, function(){
-    console.log('listening on Port :8001');
+http.listen(port, function () {
+    console.log('listening on Port ' + port);
+    console.log(ip.address() + ':' + port);
 });
 
 // define interactions with client ---------------------------------
@@ -91,6 +95,12 @@ io.on('connection', function(socket) {
     // send current question to client for when he connected after question has been sent
     socket.on('check_for_questions', function(){
         socket.emit('current_question', currentQuestion);
+    });
+
+    // send server ip to host
+    socket.on('get_ip', function () {
+        var address = ip.address() + ':' + port;
+        socket.emit('server_ip', address);
     });
 
     // save reply-matrix to file

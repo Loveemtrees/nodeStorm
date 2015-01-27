@@ -1,11 +1,12 @@
 {
   "name": "nodeStorm",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "a brainstorm by audience response application",
   "private": true,
   "dependencies": {
     "express": "latest",
     "hashmap": "latest",
+    "ip": "^0.3.2",
     "socket.io": "latest"
   },
   "author": "sb"
