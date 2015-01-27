@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 var HashMap = require('hashmap').HashMap;
+var ip = require('ip');
 
 var connectCounter = -1;
 var lastQuestion = "";
@@ -12,7 +13,6 @@ var map = new HashMap();
 var replies = [];
 var replyCounter = 0;
 var port = 8001;
-var ip = require('ip');
 
 
 // Mapping (Route Handlers) ----------------------------------------------------------
