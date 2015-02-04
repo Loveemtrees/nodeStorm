@@ -108,7 +108,7 @@ io.on('connection', function(socket) {
         var data = [];
         var dataString;
 
-        data.push("AUDIENCE RESPONSE SESSION of " + new Date() + "\n\n\n");                     // heading
+        data.push("NODESTORM SESSION of " + new Date() + "\n\n\n");                     // heading
         map.forEach(function (value, key) {                                                     // run through hashmap
             data.push("*** Frage ***\n" + key + " :\n" + value.join("\n") + "\n\n");           // save each question and replies
         });
